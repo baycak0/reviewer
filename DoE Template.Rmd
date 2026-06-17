@@ -1,0 +1,41 @@
+---
+title: "DOE template"
+author: "Bayu Cakra Buana"
+date: "10/12/2023"
+output: pdf_document
+---
+# Library
+```{r}
+library(DoE.base)
+library(FrF2)
+library(rsm)
+library(DoE.wrapper)
+library(AlgDesign)
+```
+
+\newpage
+# Generate an orthogonal array design
+```{r}
+#Variables 
+parameter1 <- c(5.5,5,4.5)
+parameter2 <- c(28.5,30,27)
+design <- oa.design(nfactors = 2, nlevels = c(length(parameter1), 
+                                              length(parameter2)), 
+                                              columns = "min3")
+head(design)
+
+# Rename the columns with variable names
+colnames(design) <- c("parameter1",
+                      "parameter2")
+
+# Replace the values in the design with actual variable values
+design$parameter1 <- parameter1[design$parameter1]
+design$parameter2<- parameter2[design$parameter2]
+design <- data.frame(design)
+write.csv(design, "DoE.csv", row.names = FALSE)
+#innitial Design
+print(design)
+```
+
+
+
